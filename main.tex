@@ -2463,6 +2463,8 @@ We defer the proof to ???, from which it follows trivially.
     it is not monotonic, nor \emph{Condorcet consistent}.
 \end{example}
 
+\section{Ranked Pairs}
+
 \begin{definition}[Ranked Pairs: Tideman, 1987]
     The SCF \emph{Ranked Pairs}
     was proposed to achieve independence of clones.
@@ -2713,6 +2715,113 @@ We defer the proof to ???, from which it follows trivially.
     finally it outputs those alternatives with no incoming edges exactly.
 \end{definition}
 
+\begin{example}
+    Consider the following margin graph,
+    in colours each simple cycle is highlighted. 
+    The Split Cycle algorithm would remove those 
+    edges corresponding to the 
+    lightest 
+    weight in the cycle, 
+    and then output the
+    candidates that have no incoming edges --- these are 
+    precisely the 
+    undefeated candidates.
+    The remaining edges give exactly the 
+    defeat relation.
+
+    \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        vertex/.style={circle, draw, thick, minimum size=20pt, inner sep=0pt, font=\small},
+        arr/.style={->, thick},
+        lbl/.style={font=\footnotesize, fill=white, inner sep=1pt}
+    ]
+
+    % ---- MAIN GRAPH ----
+    \begin{scope}
+        \node[vertex] (c) at (1.5, 4) {$c$};
+        \node[vertex] (b) at (0, 2) {$b$};
+        \node[vertex] (a) at (3, 2) {$a$};
+        \node[vertex] (d) at (1.5, 0) {$d$};
+        \node[vertex] (e) at (1.5, -1.5) {$e$};
+
+        \draw[arr] (c) -- node[lbl, left] {$8$} (b);
+        \draw[arr] (a) -- node[lbl, right] {$6$} (c);
+        \draw[arr] (b) -- node[lbl, left] {$8$} (a);
+        \draw[arr] (b) -- node[lbl, left] {$4$} (d);
+        \draw[arr] (a) -- node[lbl, right] {$4$} (d);
+        \draw[arr] (d) -- node[lbl, above] {$6$} (c);
+        \draw[arr] (d) -- node[lbl, left] {$2$} (e);
+    \end{scope}
+
+    % ---- RED CYCLE: (c, b, d) ----
+    \begin{scope}[xshift=5.5cm, scale=0.7]
+        \node[vertex] (c) at (1.5, 4) {$c$};
+        \node[vertex] (b) at (0, 2) {$b$};
+        \node[vertex] (a) at (3, 2) {$a$};
+        \node[vertex] (d) at (1.5, 0) {$d$};
+        \node[vertex] (e) at (1.5, -1.5) {$e$};
+
+        \draw[arr, red, dashed] (c) -- node[lbl, left, text=red] {$8$} (b);
+        \draw[arr] (a) -- node[lbl, right] {$8$} (c);
+        \draw[arr] (b) -- node[lbl, right] {$8$} (a);
+        \draw[arr, red, dashed] (b) -- node[lbl, left, text=red] {$4$} (d);
+        \draw[arr] (a) -- node[lbl, right] {$4$} (d);
+        \draw[arr, red, dashed] (d) -- node[lbl, above, text=red] {$6$} (c);
+        \draw[arr] (d) -- node[lbl, left] {$2$} (e);
+    \end{scope}
+
+    % ---- BLUE CYCLE: (c, b, a) ----
+    \begin{scope}[xshift=8.5cm, scale=0.7]
+        \node[vertex] (c) at (1.5, 4) {$c$};
+        \node[vertex] (b) at (0, 2) {$b$};
+        \node[vertex] (a) at (3, 2) {$a$};
+        \node[vertex] (d) at (1.5, 0) {$d$};
+        \node[vertex] (e) at (1.5, -1.5) {$e$};
+
+        \draw[arr, blue] (c) -- node[lbl, left, text=blue] {$8$} (b);
+        \draw[arr, blue] (a) -- node[lbl, right, text=blue] {$6$} (c);
+        \draw[arr, blue] (b) -- node[lbl, right, text=blue] {$8$} (a);
+        \draw[arr] (b) -- node[lbl, left] {$4$} (d);
+        \draw[arr] (a) -- node[lbl, right] {$4$} (d);
+        \draw[arr] (d) -- node[lbl, above] {$6$} (c);
+        \draw[arr] (d) -- node[lbl, left] {$2$} (e);
+    \end{scope}
+
+    % ---- GREEN CYCLE: (c, b, a, d) ----
+    \begin{scope}[xshift=11.5cm, scale=0.7]
+        \node[vertex] (c) at (1.5, 4) {$c$};
+        \node[vertex] (b) at (0, 2) {$b$};
+        \node[vertex] (a) at (3, 2) {$a$};
+        \node[vertex] (d) at (1.5, 0) {$d$};
+        \node[vertex] (e) at (1.5, -1.5) {$e$};
+
+        \draw[arr, green!50!black] (c) -- node[lbl, left, text=green!50!black] {$8$} (b);
+        \draw[arr] (a) -- node[lbl, right] {$6$} (c);
+        \draw[arr, green!50!black] (b) -- node[lbl, right, text=green!50!black] {$8$} (a);
+        \draw[arr] (b) -- node[lbl, left] {$4$} (d);
+        \draw[arr, green!50!black] (a) -- node[lbl, right, text=green!50!black] {$4$} (d);
+        \draw[arr, green!50!black] (d) -- node[lbl, below, text=green!50!black] {$6$} (c);
+        \draw[arr] (d) -- node[lbl, left] {$2$} (e);
+    \end{scope}
+
+    \end{tikzpicture}
+
+    \vspace{0.5em}
+    \begin{tabular}{lll}
+        \textcolor{red}{Red: cycle $(c, b, d)$, $\operatorname{sp} = 4$} &
+        \textcolor{blue}{Blue: cycle $(c, b, a)$, $\operatorname{sp} = 6$} &
+        \textcolor{green!50!black}{Green: cycle $(c, b, a, d)$, $\operatorname{sp} = 4$}
+    \end{tabular}
+    \end{figure}
+
+    It is clear, that the defeat relation is 
+    \textbf{not} transitive, since after deleting these three 
+    lightest edges, $c$ defeats $b$ and 
+    $b$ defeats $a$, but $c$ does not defeat $a$.
+
+\end{example}
+
 \begin{lemma}[Defeat Relation is acyclic]
     We can think of \emph{defeat} as a relation on alternatives.
     To show that 
@@ -2740,13 +2849,262 @@ We defer the proof to ???, from which it follows trivially.
     the fact that $m(a_j, a_{j+1}) > \operatorname{sp}(C)$.
 \end{proof}
 
+\begin{observation}
+    To check whether 
+    $a$ defeats $b$, we only need to check the simple cycles containing 
+    the edge $a \to b$. 
+    That is we need not check 
+    cycles containing 
+    $a$ and $b$ when they are not adjacent, and certainly not 
+    all simple cycles in the margin graph. We omit proof.
+\end{observation}
+
+\begin{definition}
+    For alternatives $a, b \in U$ with 
+    $a \succ_M b$, define the \emph{cycle number} to be 
+    \[
+        \operatorname{cyc}(a, b) := \max \bigg(\set{0} \cup
+            \set{\operatorname{sp}(C) :  \text{C a simple cycle in margin graph 
+            containing edge} \langle a, b \rangle}
+        \bigg)
+    \]
+
+    Informally, 
+    the cycle number of $a$ and $b$ is the
+    the maximum splitting number among simple cycles containing the edge $a \to b$, 
+    or $0$ if there are no such cycles.
+\end{definition}
+
+\begin{lemma}
+    $a$ defeats $b$ if and only if 
+    $m(a, b) > \operatorname{cyc}(a, b)$.
+\end{lemma}
+\begin{proof}
+   Exercise. 
+\end{proof}
+
 \begin{remark}
-    The defeat relation is not transitive.
+    The naive approach we give to 
+    compute $f_{\text{SC}}$ requires checking all 
+    simple cycles in the margin graph,
+    which is exponential in the number of alternatives.
+    We hope to use the above ideas, to get a more computationally
+    appealing method to compute 
+    $f_{\text{SC}}$.
 \end{remark}
 
 
+\begin{definition}
+    The \emph{strength} of a path 
+    in the margin graph is the smallest 
+    margin between consecutive alternatives on the path.
+
+    Let $\operatorname{strength}(x, y)$ denote the strength of the strongest path 
+    from $x$ to $y$.
+\end{definition}
+
+\begin{lemma}\label{l:strength-characterization-SC}
+    $a$ defeats $b$ if and only if
+    $a \succ_M b$ and 
+    $\operatorname{strength}(b, a) < m(a, b)$.
+\end{lemma}
+
+\begin{remark}
+    We characterise the notion of defeat via 
+    strength because $\operatorname{strength}(\cdot, \cdot)$ is a notion that \emph{can}
+    be computed efficiently using a variant of the 
+    Floyd-Warshall algorithm ($O(|A|^3)$).
+    Thus, we can compute split cycle winners in polynomial time.
+    Explicitly we do this by, 
+    \begin{enumerate}
+        \item Compute the margin graph from the profile: $O(|A|^2n)$
+        \item Compute for each pair of alternatives 
+        $\operatorname{strength}(a, b)$: $O(|A|^3)$ each so $O(|A|^5)$ total.
+        \item For each pair, check if 
+        $a$ defeats $b$ by checking if $a \succ_M b$ and $\operatorname{strength}(a, b) < m(a, b)$: $O(|A|^2)$.
+        \item Return all those alternatives with no incoming edges in the defeat graph.
+    \end{enumerate}
+\end{remark}
+
+\begin{proposition}[Split Cycle satisfies stability for winners]
+\end{proposition}
+\begin{proof}
+    Suppose for contradiction that 
+    split cycle fails stability for winners, then there is a profile $R_N$,
+    feasible set $A$, and $b \in U \setminus A$ such that there is some 
+    $a \in f_{\text{SC}}(R_N, A)$ and $a \succ_M b$, but $a \notin f_{\text{SC}}(R_N, A \cup \{b\})$.
+
+    Consider that adding $b$ to the set of feasible alternatives can only 
+    add paths in the margin graph between vertices, 
+    so $\operatorname{strength}_{A \cup \set{b}}(x, y) \geq \operatorname{strength}_A(x, y)$
+    for all $x, y \in A$.
+    For contradiction, suppose
+    $a$ is defeated in
+    $A \cup \set{b}$, then there is some alternative $c$ such that
+    $\operatorname{strength}_{A \cup \set{b}}(a, c) < m(c, a)$.
+    But $\operatorname{strength}_{A \cup \set{b}}(a, b) \geq \operatorname{strength}_A(a, b)$, 
+    thus $\operatorname{strength}_{A}(a, c) < m(c, a)$.
+    If $c \in A$, then $a$ is defeated in $A$, contradicting that $a \in f_{\text{SC}}(R_N, A)$.
+    Thus, $c = b$, but this gives a cyclic strict 
+    majority between $a$ and $b$, since $a \succ_M b$, giving contradiction.
+\end{proof}
+
+\begin{proposition}[Split Cycle satisfies positive involvement]
+\end{proposition}
+\begin{proof}
+    Exercise.
+\end{proof}
+
+\begin{proposition}[Split Cycle satisfies independence of clones]
+\end{proposition}
+\begin{proof}
+    Omitted.
+\end{proof}
+
+\begin{proposition}[Split Cycle subsumes ranked pairs]
+    If $f_{\text{RP}}$ is the ranked pairs SCF, then for all profiles $R_N$ and feasible sets $A$,
+    $f_{\text{RP}}(R_N, A) \subseteq f_{\text{SC}}(R_N, A)$.
+\end{proposition}
+
+\begin{proof}[Sketch]
+    We omit the details of tie-breaking.
+
+    Suppose that $a \notin f_{\text{SC}}(R_N, A)$, then there is some $b$ that defeats $a$.
+    Then, Lemma~\ref{l:strength-characterization-SC}'s gives that 
+    $b \succ_M a$ or $\operatorname{strength}(b, a) < m(a, b)$.
+    Now consider the cycle formed by the traversal 
+    from $b \to_M a$ and then along the strongest path from $a$ to $b$.
+    At some point the ranked pairs algorithm will 
+    encounter the edge 
+    $b \to a$ and will add it because, 
+    all cycles containing $b \to a$ have splitting number less than $m(a, b)$,
+    so the ranked pairs algorithm will never reject the edge $b \to a$, and thus $a$ can not be the winner under ranked pairs.
+\end{proof}
+
+
+\begin{comment}
+    To understand the trade-offs between Ranked Pairs and 
+    Split Cycle, we briefly look at the following impossibility results.
+
+    First, note that both Ranked Pairs and Split Cycle satisfy
+    \emph{ordinal margin invariance}; that is they depend only on the 
+    ordering of the margins 
+    $(m(x, y))_{x, y \in U}$, not on the actual values of the margins.
+    Note, Kemeny does care about the numbers not just their ordering.
+\end{comment}
+
+\begin{theorem}[Holliday, 2023]
+    The following are incompatible:
+    Condorcet extension, 
+    Condorcet loser criterion, 
+    ordinal margin invariance, 
+    positive involvement, and 
+    resolvability.
+
+    Where by \emph{Condorcet loser criterion} we mean that we 
+    never select a Condorcet loser. 
+    And, by \emph{resolvability} we mean that for all profiles $R_N$ and feasible sets $A$,
+    when $|f(R_N, A)| > 1$, there is some profile $R_{N \cup \set{i}}$ such that 
+    $|f(R_{N \cup \set{i}}, A)| = 1$ (we can always add one voter to break a tie).
+\end{theorem}
+
+\begin{remark}
+    Split Cycle satisfies all but resolvability,
+    while Ranked Pairs satisfies all but positive involvement.
+\end{remark}
+
+\begin{definition}[Quasi-Resoluteness]
+    An SCF $f$ is \emph{quasi-resolute} if for all profiles $R_N$ and feasible sets $A$,
+    where the edges of the margin graph are all 
+    distinct, then $|f(R_N, A)| = 1$.
+
+    Such profiles are sometimes called 
+    \emph{uniquely weighted}. It is clear that they do not 
+    permit majority ties, i.e. for all $x \neq y$, $m(x, y) \neq 0$.
+\end{definition}
+
+\begin{theorem}[Holliday et al., 2024]
+    There is no anonymous and neutral SCF that 
+    satisfies stability for winners and 
+    quasi-resoluteness.
+\end{theorem}
+
 
 \chapter{Multiwinner Voting Rules}
+
+\begin{idea}
+    What does multiwinner votine mean? So far, 
+    we have modelled alternatives as mutually exclusive outcomes, and we 
+    wanted to the chose the \emph{best} alternative, or rank all alternatives.
+    Of course, many rules we have discussed are irresolute, but this 
+    is not exactly desired behavior --- our framework ushered us away from 
+    multiple winners (implicitly we imagine some out of framework tie breaker).
+    
+    What if instead, we imagine we \emph{must} elect a
+    a specifically sized ($k$) set of of alternatives.
+
+    In principle, we could model multiwinner elections with the tools we have thus far, 
+    we could have voters just rank their preferences where candidates are different 
+    $k$-subsets of alternatives (different committees) --- but this gives 
+    exponential number of alternatives, and thus is not computationally appealing, nor natural.
+
+    Another idea is to use a 
+    social welfare function, and pick the 
+    top $k$ alternatives in the social welfare ordering, 
+    we revisit this later.
+\end{idea}
+
+
+\begin{remark}
+    We consider two 
+    different frameworks for 
+    multiwinner voting,
+    whereby voters \emph{indirectly}
+    express preferences over committees.
+
+    \begin{itemize}
+        \item The \emph{Apportionment setting}:
+        candidates are grouped into 
+        \emph{parties} and voters can support a single party only.
+        The underlying assumption is that:
+        voters only care about how many 
+        candidates from their party are selected.
+
+        This models, \emph{party-list election}, which are often used in 
+        parliamentary elections.
+        Intuitively, it seems clear that it kind of limits the 
+        expressive power of voters.
+
+
+        \item The \emph{Approval-Based setting}, voters 
+        can approve whichever candidates, but
+        they do not rank them (still less expressive than our 
+        previous settings).
+        The assumption is that voters only care about how many candidates
+        that they approve of are selected.
+    \end{itemize}
+
+    In both settings, we are interested in a 
+    notion of \emph{proportional representation}.
+\end{remark}
+
+\section{Apportionment Setting}
+
+\begin{definition}
+    In the apportionment setting,
+    we have a set of parties $P = \{P_1, \dots, P_p\}$, and 
+    each voter votes for exactly one party. 
+
+    For each party $P_i$ let $v_i$ denote the number of votes it recieves.
+    The goal is to allocate a given number of seats among the parties, 
+    \emph{proportional} to the votes.
+\end{definition}
+
+
+
+
+
+\unclear{TODO: Crib sheet for all the rules and the properties that they satisfy.}
 
 \bibliographystyle{plain}
 \bibliography{refs}

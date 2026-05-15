@@ -3,6 +3,7 @@
         "biconditional",
         "Borda's",
         "Kemeny's",
+        "multiwinner",
         "strategyproof"
     ]
 }
