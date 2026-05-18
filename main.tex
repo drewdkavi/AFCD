@@ -25,6 +25,8 @@
 \usepackage{array}
 \usepackage{booktabs}
 
+
+\usepackage{tcolorbox}
 \usepackage{pgfplots}
 \usepackage{booktabs}
 \usepackage{array}
@@ -49,7 +51,7 @@
 }
 
 \theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
+\newtheorem{theorem}{Theorem}[subsection]
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
@@ -64,6 +66,8 @@
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{observation}[theorem]{Observation}
+\let\comment\undefined
+\let\endcomment\undefined
 \newtheorem*{comment}{Comment}
 \newtheorem*{claim}{Claim}
 
@@ -125,6 +129,7 @@
 
 \begin{document}
 \maketitle
+\tableofcontents
 
 
 \setlength{\parindent}{0pt}
@@ -147,6 +152,8 @@ Also, Computational Social Choice (Felix Brandt, YouTube)
 was a basis for this course.
 
 \chapter{Foundations}
+
+\subsection{Rankings}
 
 \begin{definition}
     A binary relation $R$ on a set $U$ is:
@@ -249,6 +256,8 @@ was a basis for this course.
     Note we used the finiteness of $U$, 
     which we assume throughout.
 \end{remark}
+
+\subsection{Preferences}
 
 \begin{definition}[Prefernces over Alternatives]
     Let $U$ be a finite set, which we call the \emph{alternatives}.
@@ -1457,7 +1466,108 @@ We defer the proof to ???, from which it follows trivially.
     by running it on a preference profile that is flipped upside down.
 \end{remark}
 
-\unclear{TODO: Important, re-watch last 10mins of 03/02/2026 --- make notes on this section.}
+\begin{remark}
+    We have noted that
+    $\gtrsim_M$ is 
+    transitive in 
+    $\mathcal{D}_{\text{SP}}^{\trianglelefteq}(U)$
+    and in 
+    $\mathcal{D}_{\text{SC}}^{\trianglelefteq}(U)$.
+    Therefore, it is too in the 
+    union domain, 
+    \[
+        \mathcal{D}_{\text{SP}}^{\trianglelefteq}(U) \cup \mathcal{D}_{\text{SC}}^{\trianglelefteq}(U)
+    \]
+
+    One might ask if this is maximal, 
+    that is, do there exist
+    profiles that are neither 
+    single-peaked nor single-caved,
+    which still have a transitive 
+    majority relation?
+    The answer is no, 
+    consider the following example.
+
+    \begin{center}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{1} & \textbf{1} & \textbf{1} \\
+        \hline
+        $b$ & $a$ & $d$ \\
+        $c$ & $b$ & $b$ \\
+        $a$ & $c$ & $c$ \\
+        $d$ & $d$ & $a$ \\
+        \hline
+    \end{tabular}
+    \end{center}
+
+    That is because, the above profile 
+    satisfies the 
+    property of 
+    \emph{single-peakedness for triples} --- defined in a rather obvious way.
+
+    Can we characterise the (Cartesian) domains for which the 
+    majority relation is transitive \footnote{
+        We restrict to Cartesian domains, otherwise by definition it is 
+        just $\mathcal{D}_{\text{TRANS}}$.
+    }?
+
+\end{remark}
+
+\begin{definition}[Value-Restricted Domain]
+    A Cartesian domain $\mathcal{D}(U) = \mathcal{L}'(U)^N$ with 
+    $\mathcal{L}'(U) \subseteq \mathcal{L}(U)$ is 
+    \emph{value-restricted} if for each $x, y, z \in U$, 
+    there is some alternative, say $x$, such that
+    \begin{itemize}
+        \item $x$ is never the worst alternative 
+        ($\forall \gtrsim \in \mathcal{L}'(U): x \succ y \lor x \succ z$), or
+        \item $x$ is never the best alternative 
+        ($\forall \gtrsim \in \mathcal{L}'(U): y \succ x \lor z \succ x$), or
+        \item $x$ is never the middle alternative 
+        ($\forall \gtrsim \in \mathcal{L}'(U): (x \succ y \land x \succ z) \lor (y \succ x \land z \succ x)$).
+    \end{itemize}
+
+    The forbidden substructure for value-restricted domains is 
+    the Condorcet profile restricted to any triple:
+    \begin{center}
+    \begin{tabular}{ccc}
+        $x$ & $y$ & $z$ \\
+        $y$ & $z$ & $x$ \\
+        $z$ & $x$ & $y$
+    \end{tabular}
+    \end{center}
+
+    $\mathcal{D}_{\text{SP}}^{\trianglelefteq}(U)$ and 
+    $\mathcal{D}_{\text{SC}}^{\trianglelefteq}(U)$ are value-restricted 
+    for all $\trianglelefteq$.
+\end{definition}
+
+\begin{theorem}[Sen and Pattanaik, 1969]
+    Let $\mathcal{L}'(U) \subseteq \mathcal{L}(U)$ and $n$ odd.
+    Then, $\gtrsim_M$ is transitive in domain 
+    $\mathcal{D}(U) = \mathcal{L}'(U)^N$ iff $\mathcal{D}(U)$ is value-restricted.
+\end{theorem}
+
+\begin{remark}
+    This does \textbf{not} imply that every preference profile 
+    for which $\gtrsim_M$ is transitive, is value-restricted.
+    For example, consider the following profile:
+    \begin{center}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{3} & \textbf{1} & \textbf{1} \\
+        \hline
+        $a$ & $b$ & $c$ \\
+        $b$ & $c$ & $a$ \\
+        $c$ & $a$ & $b$ \\
+        \hline
+    \end{tabular}
+    \end{center}
+    Here $\gtrsim_M$ is transitive (since $a$ wins every pairwise comparison),
+    yet $\mathcal{L}'(U) = \mathcal{L}(U)$ contains the full Condorcet triple,
+    so the domain is not value-restricted.
+\end{remark}
 
 \chapter{Borda, Condorcet, and Kemeny}
 
@@ -3098,14 +3208,964 @@ We defer the proof to ???, from which it follows trivially.
     For each party $P_i$ let $v_i$ denote the number of votes it recieves.
     The goal is to allocate a given number of seats among the parties, 
     \emph{proportional} to the votes.
+
+    An instance of the apportionment problem is given by the pair 
+    $(\vec{v}, h)$ where $\vec{v} = (v_1, \dots, v_p) \in \mathbb{N}^p$
+    is the \emph{vote distribution} and $h \in \mathbb{N}_{>0}$ is the 
+    \emph{committee size} or \emph{house size}.
+
+    We denote the total number of votes by 
+    $v_+ := \sum_{i=1}^p v_i$.
+
+    The seat distribution is the vector 
+    $\vec{x} = (x_1, \dots, x_p) \in \mathbb{N}^p$ where $x_i$ is the number of seats allocated to party $P_i$,
+    and $\sum_{i=1}^p x_i = h$.
+\end{definition}
+
+\begin{remark}
+    An equivalent problem: For each state in a union, 
+    allocate a number of seats proportional to the 
+    population of the state.
+\end{remark}
+
+\begin{example}
+    $\vec{v} = (7270, 1230, 220); h = 21$, and a 
+    seat distribution (with respect to $\vec{v}$ and $h$) is $\vec{x} = (15, 4, 2)$.
+\end{example}
+
+\begin{definition}[Apportionment Method]
+    An \emph{apportionment method} $M$ maps 
+    every instance $(\vec{v}, h)$ to a non-empty set $M(\vec{v}, h)$ of seat distributions.
+\end{definition}
+
+\begin{definition}[Quota]
+    Ideally, we would like to give each party its exact \emph{proportional share} of seats.
+    For $(\vec{v}, h)$, the \emph{quota} of party $P_i$ is 
+    given by 
+    \[
+        q_i := \frac{v_i}{v_+} \cdot h
+    \]
+    Of course, this is not in general an integer.
+
+    We call the fraction 
+    $\frac{v_+}{h}$ the \emph{Hare quota}, 
+    and see that equivalently 
+    $
+    q_i = \frac{v_i}{\text{Hare quota}}$.
 \end{definition}
 
 
+\begin{definition}[Hamilton Method]
+    The \emph{Hamilton method} has two steps.
+    \begin{enumerate}
+        \item Calculate quotas and give 
+        each party $\lfloor q_i \rfloor$ seats.
+        (Note, the sum of the floor of these quotas is $\leq h$).
+
+        \item Give the remaining $r$ seats (if any) to each 
+        of the $r$ parties with the largest fractional part of their quota (
+            largest $q_i - \lfloor q_i \rfloor$
+        ).
+
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[D'Hont Method]
+    Find an integer divisor $d$, such that 
+    \[
+        \sum_{i=1}^p \left\lfloor \frac{v_i}{d} \right\rfloor = h
+    \]
+    Then, we give party $P_i$ $\left\lfloor \frac{v_i}{d} \right\rfloor$ seats.
+
+    Such a divisor always exists
+    when the number of votes for each party are 
+    pairwise distinct, and while it need not exist uniquely,
+    it always apportions the same seat distribution.
+\end{definition}
+
+\begin{remark}
+    The seat distribution found by 
+    the D'Hont method can be constructed by the following method.
+
+    \begin{itemize}
+        \item Define the $j$-th divisor as 
+        $d(j) = j$
+        \item Construct the table with numbers $\frac{v_i}{d(j)}$ for $i \in [p]$ and $j \in \mathbb{N}$
+        
+        \item Choose the largest $h$ entries of this table and 
+        distribute seats accordingly
+    \end{itemize}
+
+    \begin{figure}[H] 
+        \centering
+        \includegraphics[width=\textwidth]{seq-DHondt.jpg}
+        \caption{Sequential D'Hondt method table.}
+    \end{figure}
 
 
+    Why does this work? (Think about it.)
+\end{remark}
+
+\begin{remark}
+    We can choose the values of 
+    the divisors $d(j)$ differently, to get other 
+    apportionment methods, known as \emph{divisor methods}.
+    For example, the Sainte-Laguë method uses $d(j) = 2j - 1$, 
+    which can lead to different distributions.
+\end{remark}
+
+\subsection{Axioms for Apportionment Methods}
+
+\begin{definition}[Basic Apportionment Properties]
+    \leavevmode \\
+    \begin{itemize}
+        \item \emph{Impartiality}: the only information that matters is the vote distribution $\vec{v}$ and the house size $h$.
+        \item \emph{Exactness}: if all the quotas are integers, then 
+        the apportionment method gives each party its quota ($x_i = q_i$).
+        \item \emph{Homogeneity}: if all votes are multiplied by the same positive factor,
+        the outcomes do not change (the only thing that matters are the quotas).
+        \item \emph{Concordance}: a party with strictly more votes than another, 
+        cannot be allocated fewer seats than the other, i.e. 
+        $v_i > v_j \implies x_i \geq x_j$.
+    \end{itemize}
+
+    All the rules we have seen, satisfy these properties, in fact most natural 
+    apportionment methods satisfy these properties.
+\end{definition}
+
+\begin{idea}
+    We will focus on slightly harder 
+    properties to satisfy:
+    \emph{quota property}, \emph{committee monotonicity}, 
+    and \emph{population monotonicity}.
+\end{idea}
+
+\subsection{Quota Property}
+
+\begin{definition}[Quota Property]
+    An apportionment method $M$ satisfies the
+    \emph{quota property} if for all instances $(\vec{v}, h)$,
+    for all $x \in M(\vec{v}, h)$, 
+    $x_i \in \{\lfloor q_i \rfloor, \lceil q_i \rceil\}$.
+\end{definition}
+
+\begin{example}
+    \leavevmode \\
+    \begin{itemize}
+        \item The Hamilton method satisfies the quota property (reason why?).
+        \item The D'Hondt method does not satisfy the quota property, 
+        see the following example.
+        \begin{center}
+        \begin{tabular}{c c c c}
+            \hline
+            party & $P_1$ & $P_2$ & $P_3$ \\
+            \hline
+            votes ($v_i$) & 7270 & 1230 & 2220 \\
+            quota ($q_i$) & 14.92 & 2.52 & 4.56 \\
+            seats ($x_i$) & 16 & 2 & 4 \\
+            \hline
+            \multicolumn{4}{c}{$h = 22$}
+        \end{tabular}
+        \end{center}
+    \end{itemize}
+\end{example}
+
+\begin{definition}[Lower Quota]
+    The weaker axiom 
+    \emph{lower quota} requires that
+    for all instances $(\vec{v}, h)$, for all $x \in M(\vec{v}, h)$,
+    $x_i \geq \lfloor q_i \rfloor$.
+\end{definition}
+
+\begin{theorem}[Balinski and Young, 1982]
+    D'Hondt's method satisfies 
+    the lower quota property.
+    Moreover, it is the only 
+    divisor method that satisfies the lower quota property.
+\end{theorem}
+
+
+\subsection{Committee Monotonicity}
+
+\begin{example}[The Alabama Paradox]
+    Increasing the committee size may result in some 
+    party having fewer seats.
+
+    \begin{center}
+    \begin{tabular}{c c c c}
+        \hline
+        party & $P_1$ & $P_2$ & $P_3$ \\
+        \hline
+        votes ($v_i$) & 7270 & 1230 & 2220 \\
+        quota ($q_i$) & 14.24 & 2.41 & 4.35 \\
+        seats ($x_i$) & \textbf{14} & \textbf{3} & \textbf{4} \\
+        \hline
+        \multicolumn{4}{c}{$h = 21$}
+    \end{tabular}
+    \quad $\to$ \quad
+    \begin{tabular}{c c c c}
+        \hline
+        party & $P_1$ & $P_2$ & $P_3$ \\
+        \hline
+        votes ($v_i$) & 7270 & 1230 & 2220 \\
+        quota ($q_i$) & 14.92 & 2.52 & 4.56 \\
+        seats ($x_i$) & \textbf{15} & \textbf{2} & \textbf{5} \\
+        \hline
+        \multicolumn{4}{c}{$h = 22$}
+    \end{tabular}
+    \end{center}
+\end{example}
+
+\begin{definition}[Committee Monotonicity]
+    An apportionment method $M$ satisfies \emph{committee monotonicity}
+    if this can never happen.
+\end{definition}
+
+\begin{example}
+    The Hamilton method fails committee monotonicity (see the above example),
+    but the D'Hondt method satisfies committee monotonicity,
+    which can be seen by the tabular definition of 
+    D'Hondt's method (and likewise for all divisor methods).
+\end{example}
+
+\subsection{Population Monotonicity}
+
+\begin{example}[The Population Paradox]
+    A party that loses votes may gain seats at the expense of a party that loses votes.
+    Formally, 
+    there are two vote distributions $\vec{v}$ and $\vec{v}'$ such that,
+    \begin{itemize}
+        \item $v_i < v_i'$ and $v_j > v_j'$ for some $i \neq j$.
+        \item For some $x \in M(\vec{v}, h)$ and $x' \in M(\vec{v}', h)$,
+        $x_i > x_i'$ and $x_j < x_j'$.
+    \end{itemize}
+    That is, we cannot have party $i$ gaining votes and 
+    party $j$ losing votes resulting in party $i$ losing seats and party $j$ gaining seats.
+\end{example}
+
+\begin{definition}[Population Monotonicity]
+    An apportionment method $M$ satisfies \emph{population monotonicity} if this can never happen.
+    Note there are no requirements on 
+    the other parties, they can gain or lose votes as they please.
+\end{definition}
+
+\begin{example}
+    The Hamilton method fails population monotonicity, but the D'Hondt method satisfies it.
+\end{example}
+
+\begin{theorem}[Balinski and Young, 1982]
+    There is no concordant apportionment method that satisfies both 
+    the quota property and population monotonicity.
+\end{theorem}
+
+\begin{remark}
+    A more natural notion is called \emph{vote monotonicity}, 
+    which requires that if a party gains votes (and the rest of the 
+    parties recieve the same number of votes), it should not lose seats.
+
+    It is not known, if there is a 
+    apportionment method that satisfies the quota property, committee monotonicity, and vote monotonicity
+    (open problem).
+\end{remark}
+
+\section{Approval-based Multiwinner Voting}
+
+\begin{comment}
+    We need to flesh out what is even meant by 
+    \emph{proportional representation} in this setting.
+\end{comment}
+
+\begin{idea}
+    Voters express their preferences with \emph{approval votes}.
+    Think of a list of the candidates and each voter puts a 
+    checkmark against the ones they approve of, and 
+    leaves the rest blank.
+\end{idea}
+
+\begin{definition}[Approval-Based Multiwinner Rule]
+    Suppose we have a finite set of candidates $C$, 
+    and a finite set of voters $N = \{1, \dots, n\}$. 
+    We let 
+    $A_i \subseteq C$ denote the set of candidates that voter $i$ approves of, 
+    note $A_i$ is free to be any subset of $C$.
+
+    A \emph{committee} of size $k$ is a $k$-sized subset of 
+    $C$, most often we denote it $W \subset C$.
+
+    Given a \emph{preference profile} 
+    $A_N = (A_1, \dots, A_n)$
+    (note our notion of preference profile here does \emph{not}
+    coincide with our previous notion of preference profile),
+    and a committee size $k$, an \emph{approval-based multiwinner rule} is a function
+    that maps $(A_N, k)$ to a non-empty set of committees
+    \footnote{As usual we map to a set instead of a singleton for reason of symmetry}
+    of size $k$.
+\end{definition}
+
+\subsection{Approval-based Multiwinner Rules}
+
+\begin{definition}[Approval Voting (AV)]
+    The \emph{approval voting} rule,
+    computes the number of voters approving each candidate,
+    then outputs the $k$ candidates with the most approvals.
+\end{definition}
+
+\begin{notation}
+    For $c \in C$, let 
+    $N_c = \{i \in N : c \in A_i\}$ denote the set of voters that approve of candidate $c$ (\emph{approvers}), 
+    and let $n_c = |N_c|$ denote the number of voters that approve of candidate $c$ (\emph{approval score}).
+\end{notation}
+
+\begin{example}
+    What problems arise from such a system.
+    We can consider that there may be an alternatives ranked 
+    as having the $k + 1$-th approval scores. In fact such an alternative could be 
+    very close to the $k$-th approval score, but it is not selected.
+    We aim for some notion of proportional representation, but this 
+    doesn't feel particularly proportional.
+
+    For a concrete example suppose:
+    $C = \set{a, b, c, x, y}$, $k = 3$, and $|N| = 9$.
+
+    Suppose we have a profile where 
+    5 voters approve of $a$, $b$ and $c$ only,
+    and 4 voters approve of $x$ and $y$ only.
+    Then, $a$, $b$, and $c$ are the winners under approval voting, but
+    $x$ and $y$ are not selected, even though they have a very high
+    approval score (4 out of 9).
+
+    The above is an example of a 
+    \emph{dictatorship of the majority}, where the majority gets all the seats, and the minority gets none.
+\end{example}
+
+\begin{definition}[Satisfaction-AV (SAV)]
+    The \emph{satisfaction-approval voting} rule, 
+    choses committee(s) $W$ that maximize the total satisfaction:
+    \[
+        \sum_{i \in N} \operatorname{sat}(i, W)
+    \]
+    Where $\operatorname{sat}(i, W) = \frac{|A_i \cap W|}{|A_i|}$.
+
+    Informally, $\operatorname{sat}(i, W)$
+    is the fraction of candidates that voter $i$ approves of that are selected in committee $W$, and 
+    we optimise maximising the sum of this quantity over all voters.
+\end{definition}
+
+\begin{example}
+    In the above example,
+    the satisfaction-approval voting rule would select
+    all the committees with one 
+    candidates from $\{a, b, c\}$ and one candidate from $\{x, y\}$
+    (which seems weird).
+\end{example}
+
+\begin{remark}
+    We can conceptualise 
+    SAV by considering each voter having 
+    weight $1$ which they distribute equally to 
+    the candidates they approve of, and then we select the $k$ candidates with the 
+    highest total weight.
+\end{remark}
+
+\begin{definition}[Greedy-AV]
+    Iteratively construct 
+    the committee by at each step adding a candidate that is approved by the 
+    most voters that do not yet have a member they approve of in the partially constructed 
+    committee.
+    
+    We say that a voter $i$ is represented in $W$ if 
+    $A_i \cap W \neq \emptyset$.
+    If / when all voters are represented, we can add any candidates we like to fill up the committee.
+\end{definition}
+
+\begin{example}
+    In the above example
+    the greedy-AV rule would select all the committees with one
+    candidates from $\{a, b, c\}$ and one candidate from $\{x, y\}$.
+\end{example}
+
+\begin{definition}[Proportional Approval Voting(PAV)]
+    Choose committee(s) $W$ maximizing $\operatorname{score}(W) = 
+    \sum_{i \in N} \operatorname{score}(i, W)$, where,
+    \[
+        \operatorname{score}(i, W) = 1 + \frac{1}{2} + \cdots + \frac{1}{|A_i \cap W|}
+    \]
+
+    The intuition behind this is that 
+    a voter gets diminishingly happy the more of her 
+    approved candidates are selected, so we give her a score of $1$ for the first approved candidate selected,
+    $\frac{1}{2}$ for the second approved candidate selected, and so on.
+\end{definition}
+
+\begin{remark}
+    PAV is clearly infeasible to compute, we can 
+    construct a greedy version of it that is computable in 
+    polynomial time, though it of course, does not give 
+    the same outcome as PAV.
+\end{remark}
+
+\begin{definition}[Sequential Proportional Approval Voting (seqPAV)]
+    We iteratively construct the committee
+    by at each step adding a candidate that maximises the increase in the
+    PAV score of the committee.
+\end{definition}
+
+\begin{algorithm}[H]
+\caption{Sequential PAV}
+\begin{algorithmic}[1]
+\State $W \gets \emptyset$
+\While{$|W| < k$}
+    \State Select $c^* \in C \setminus W$ maximizing $\operatorname{score}(W \cup \{c^*\})$
+    \State $W \gets W \cup \{c^*\}$
+\EndWhile
+\State \Return $W$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{definition}[Generalized PAV ($\vec{w}$-PAV)]
+    Use PAV with an arbitrary \emph{weight vector}
+    $\vec{w} = (w_1, w_2, \dots)$ where $w_j$ is the weight given
+    to a voter for having $j$ approved candidates selected in the committee.
+    Thus, we maximise 
+    \[
+        \operatorname{score}_{\vec{w}}(W) = \sum_{i \in N} \operatorname{score}_{\vec{w}}(i, W)
+    \]
+    Where here $\operatorname{score}_{\vec{w}}(i, W) = w_1 + w_2 + \cdots + w_{|A_i \cap W|}$.
+\end{definition}
+
+\begin{remark}
+    If we consider the weight vector $\vec{w} = (1, 1, 1, \dots)$, then $\vec{w}$-PAV
+    is nothing but Approval Voting.
+
+    For the vector 
+    $\vec{w} = (1, 0, 0, \dots)$, we get 
+    exactly Greedy-AV.
+
+    Can we make a simillar comment about 
+    SAV? Think, why or why not?
+\end{remark}
+
+\subsection{Representative Committees}
+
+\begin{idea}
+    How do we formalise that a 
+    committee is representative of a preference profile?
+
+    Some intuition gives that 
+    groupings of size $n / k$ 
+    should \emph{have} at least one 
+    representative candidate
+    (where $n$ is the number of voters and $k$ is the committee size, and 
+    $n/k$ is an analog of the Hare quota in the apportionment setting).
+
+    A few problems with this intuition are:
+    \begin{itemize}
+        \item How do we group the voters into blocks of size $n / k$?
+        \item What does it mean for a group of voters to have a representative candidate?
+    \end{itemize}
+
+    A first attempt could be the following.
+    For any $S \subseteq N$ with $|S| \geq n / k$,
+    there should be some candidate $c \in W$ \emph{representing} $S$ ---
+    but as mentioned above, what does it mean for $c$ to represent $S$?
+
+    Instead, lets refine this approach.
+    Call a voter group $S \subseteq N$ \emph{cohesive} if there is some candidate
+    $c$ that all voters in $S$ approve of, i.e. $\bigcap_{i \in S} A_i \neq \emptyset$.
+    Then, we can say that a committee is representative if for every cohesive group $S$ with
+    $|S| \geq n / k$, there is some candidate in the committee that represents $S$,
+    i.e. $\bigcap_{i \in S} A_i \cap W \neq \emptyset$.
+    Where here, by represents we mean a candidate approved by all members
+    in the cohesive voter group.
+\end{idea}
+
+\begin{example}
+    Unfortunately, even this second approach does not quite work.
+    It may be too demanding for any 
+    committee to satisfy.
+
+    Consider the example with 
+    $n = 4$ and $k = 2$, and the profile where:
+    one voter approves of $a$ only,
+    the second voter approves of $a$ and $b$,
+    the third voter approves of $b$ and $c$, and
+    the fourth voter approves of $c$ only.
+
+    $n/k = 2$ and voters (1, 2), (2, 3), and (3, 4) are cohesive groups of size $n/k$, 
+    each demanding that $a$, $b$, and $c$ respectively be in the committee, but we can only select two candidates.
+\end{example}
+
+\begin{definition}[Justified Representation (JR)]
+    A committee $W$ satisfies \emph{justified representation}
+    if for each 
+    cohesive group $S$ with $|S| \geq n / k$,
+    we have $\bigcup_{i \in S} A_i \cap W \neq \emptyset$.
+\end{definition}
+\begin{remark}
+    This feels a bit strange, since we dont require 
+    that there is a candidate approved by all 
+    members of the cohesive group in the committee, but instead just 
+    a candidate approved by at least one member of the cohesive group.
+    It is a very weak sense of representation.
+
+    An equivalent formulation makes a little more sense intuively.
+    JR says that there does not exists a 
+    cohesive group of size $\geq n/ k$ which is completely unrepresented.
+\end{remark}
+
+
+\begin{example}
+    For $n = 12, k = 4$.
+    \[
+        \text{Profile: \qquad} 3 \times \set{a, b, c}, 3 \times \set{b}, 
+        3 \times \set{e, f}, 2 \times \set{x, y, z},
+        1 \times \set{x, y}
+    \]
+
+    Then JR enforces that $b$ using the $3$-sized cohesive group, 
+    and also that one of $e, f$ and one of $x, y, z$ are chosen.
+\end{example}
+
+\begin{example}\label{e:fail-JR}
+    Despite JR being incredibly weak,
+    many approval-based mutliwinner rules violate JR.
+    \begin{itemize}
+        \item AV fails JR (for $k \geq 2$)
+        \item SAV fails JR (for $k \geq 2$)
+        \item seqPAV fails JR (for $k \geq 6$, found by linear programming)
+        \item Greedy-AV satisfies JR (Exercise.)
+    \end{itemize}
+\end{example}
+\begin{proposition}[Proof Idea]
+    If there is a JR violation, then any candidate witnessing the 
+    violation can be swapped into the committee to increase the 
+    PAV score (by atleast $n/k$).
+\end{proposition}
+
+\begin{theorem}
+    Assuming $w_1 = 1$, 
+    $w-PAV$ satisfies JR 
+    if and only if 
+    $w_j \leq \frac{1}{j}$ for all 
+    $j > 1$.
+\end{theorem}
+
+\begin{remark}
+    Note that JR does not require that 
+    massive cohesive groups are represented more than once.
+    For $\tau \in \mathbb{N}$, a group of size 
+    $|S| \geq \tau \cdot n / k$ \emph{deserves} at least $\tau$ representatives.
+\end{remark}
+
+\begin{definition}[Extended Justified Representation (EJR)]
+    Call a voter group 
+    $S \subseteq N$ \emph{$\tau$-cohesive} if there are at least $\tau$ candidates that all voters in $S$ approve of, i.e.
+    $|\bigcap_{i \in S} A_i| \geq \tau$.
+
+    A committee $W$ satisfies 
+    \emph{extended justified representation}
+    if for each $\tau$-cohesive group $S$ with $|S| \geq \tau \cdot n / k$,
+    we have,
+    \[
+        |A_i \cap W| \geq \tau \text{\qquad For some $i \in S$}
+    \]
+\end{definition}
+
+\begin{remark}
+    It is clear that EJR imples JR, 
+    that is EJR is a stronger notion than JR.
+    Thus, all those rules discussed in 
+    Example~\ref{e:fail-JR} that fail 
+    JR also fail EJR.
+\end{remark}
+\begin{example}
+    Further, we see that Greedy-AV 
+    fails EJR (despite satisfying JR).
+    Consider the example
+    for $k = 3$ and $n = 100$,
+    \[
+        98 \times \set{a, b},
+        \qquad 1 \times \set{c},
+        \qquad 1 \times \set{d}
+    \]
+    The 98 $\set{a, b}$ voters form a 
+    $2$-cohesive set, and form 
+    a cohesive set of size 
+    $98$ which is greater than 
+    $2 \cdot n / k$,
+    so they deserve at least $2$ representatives,
+    but Greedy-AV will select $a$ (or $b$), then $c$, and then $d$.
+\end{example}
+
+\begin{proposition}
+    PAV satisfies EJR (and thus JR too)
+\end{proposition}
+\begin{proof}
+    Exercise. Try just show JR first,
+    argue that a swap can improve the 
+    PAV score if there is an \emph{unsatisfied} group.
+\end{proof}
+
+\begin{theorem}
+    For any weight vector 
+    $\vec{w} \neq (1, 1/2, 1/3, \dots)$,
+    $\vec{w}$-PAV fails EJR.
+    (Assuming $w_1 = 1$).
+\end{theorem}
+\begin{proof}
+    Omitted.
+\end{proof}
+
+\begin{proposition}
+    It can be checked in polynomial time whether a 
+    given committee satisfies JR.
+
+    In principle, this seems like a rather hard task, 
+    since we need to check for all subsets of voters.
+\end{proposition}
+\begin{proof}[Sketch]
+    We check candidate by candidate instead.
+    Iterate over each candidate, 
+    and check how many voter there are for it.
+    If there are enough voter (i.e. $\geq n / k$),
+    then we can consider if that candidate is included in the committee, 
+    if so we are happy and move on, if at any point we find a 
+    violation, then that gives witness to a committee not 
+    satisfying JR.
+\end{proof}
+
+\begin{remark}
+    Checking EJR is much harder, it is coNP-complete.
+    We can verify an no instance by 
+    exhibiting a $\tau$-cohesive group that is not sufficiently represented.
+\end{remark}
+
+
+\begin{idea}
+    We now go to another axiom that is 
+    stronger than EJR but can be checked more efficiently.
+\end{idea}
+
+\begin{definition}[EJR$^+$]
+    A committee $W$ satisfies 
+    EJR$^+$ if there does not exists,
+    $c \in C \setminus W$, 
+    $S \subseteq N$, 
+    $\tau \in \mathbb{N}$, 
+    such that 
+    $|S| \geq \tau \frac{n}{k}$, 
+    and $c \in \bigcap_{i \in S} A_i$
+    and $|A_i \cap W| < \tau$ for all $i \in S$.
+
+    Intuitively, if a group $S$ of size at least $\tau \cdot \frac{n}{k}$ 
+    and all members approve some common candidate $c \notin W$, 
+    then at least one member of $S$ must have $\tau$ or more 
+    approved candidates in $W$.
+\end{definition}
+
+\begin{remark}
+    Note the definition of 
+    EJR$^+$ 
+    does not require 
+    $S$ to be $\tau$-cohesive.
+    This is the main difference from the notion of 
+    EJR.
+\end{remark}
+
+\begin{proposition}
+    EJR$^+$ implies EJR.
+\end{proposition}
+\begin{proposition}
+    \unclear{Exercise.}
+\end{proposition}
+
+\begin{remark}
+    It can be verified efficiently if 
+    a committee satisfies EJR$^+$.
+
+    In sketch, we iterate over candidates in $c \in C \setminus W$ and 
+    $l \in \set{1, \dots, k}$ and check that
+    the set of all voters approving 
+    $c$ has the desired properties.
+\end{remark}
+
+
+\begin{intuition}   
+    In brief, we summarize the differences between 
+    EJR and EJR$^+$ in the following way. 
+    \begin{center}
+    \begin{minipage}{0.45\textwidth}
+    \begin{tcolorbox}[colback=gray!10, colframe=gray!50, title={}]
+        \centering \textbf{\textcolor{blue!70!black}{EJR} rules out groups $S$ with}
+
+        \begin{itemize}
+            \item $|S| \geq \ell \dfrac{n}{k}$
+            \item $|A_i \cap W| < \ell$ for all $i \in S$
+            \item {\color{purple} $\left|\displaystyle\bigcap_{i \in S} A_i\right| \geq \ell$}
+        \end{itemize}
+    \end{tcolorbox}
+    \end{minipage}%
+    \hspace{1em}%
+    \begin{minipage}{0.45\textwidth}
+    \begin{tcolorbox}[colback=gray!10, colframe=gray!50, title={}]
+        \centering \textbf{\textcolor{blue!70!black}{EJR$^+$} rules out groups $S$ with}
+
+        \begin{itemize}
+            \item $|S| \geq \ell \dfrac{n}{k}$
+            \item $|A_i \cap W| < \ell$ for all $i \in S$
+            \item {\color{purple} $\exists c \in \displaystyle\bigcap_{i \in S} A_i$ with $c \notin W$}
+        \end{itemize}
+    \end{tcolorbox}
+    \end{minipage}
+    \end{center}
+\end{intuition}
+
+\bigskip
+
+\begin{example}
+    Consider the following example, 
+    the committee 
+    $W$ indeed satsifies EJR (check), 
+    and yet that committee 
+    does not satisfy 
+    EJR$^+$, 
+    to see why, consider that 
+    $c_4$ is 
+    approved by all 
+    of the group 
+    $S := \set{3, 4, 5, 6, 7, 8}$, 
+    and is not in $W$.
+
+    Further $|S| \geq 3 \cdot n / k$, 
+    but every member is 
+    satisfied why less than 
+    $3$ candidates in $W$.
+
+
+    \begin{center}
+    \begin{tikzpicture}[
+        bar/.style={minimum height=0.55cm, inner sep=0pt, anchor=west, font=\small},
+        inW/.style={draw=blue!70, thick, dashed, rounded corners=2pt, font=\small\bfseries}
+    ]
+
+    \def\s{1.0} % scale: 1 unit per voter
+
+    % c1: voters 1--4
+    \fill[orange!25] (1*\s, 0) rectangle (4*\s, 0.55);
+    \node[inW] at (2*\s, 0.275) {$c_1$};
+
+    % c2: voters 1--3
+    \fill[purple!15] (1*\s, 0.7) rectangle (3*\s, 1.25);
+    \node[inW] at (2*\s, 0.975) {$c_2$};
+
+    % c3: voters 2--7
+    \fill[teal!20] (2*\s, 1.4) rectangle (7*\s, 1.95);
+    \node at (4.5*\s, 1.675) {$c_3$};
+
+    % c4: voters 3--8
+    \fill[red!15] (3*\s, 2.1) rectangle (8*\s, 2.65);
+    \node at (5.5*\s, 2.375) {$c_4$};
+
+    % c5: voters 4--8
+    \fill[red!20] (4*\s, 2.8) rectangle (8*\s, 3.35);
+    \node[inW] at (5*\s, 3.075) {$c_5$};
+
+    % c6: voters 5--8
+    \fill[blue!15] (5*\s, 0) rectangle (8*\s, 0.55);
+    \node at (6.5*\s, 0.275) {$c_6$};
+
+    % c7: voters 6--8
+    \fill[pink!40] (6*\s, 0.7) rectangle (8*\s, 1.25);
+    \node[inW] at (7*\s, 0.975) {$c_7$};
+
+    % Axis
+    \draw (0.5*\s, -0.3) -- (8.5*\s, -0.3);
+    \foreach \x in {1,...,8} {
+        \draw (\x*\s, -0.3) -- (\x*\s, -0.45);
+        \node[below, font=\small] at (\x*\s, -0.45) {\x};
+    }
+
+    % Label
+    \node[anchor=east, align=left, font=\small] at (0.5*\s, 2.5) {
+        Example with $n = 8$\\
+        voters and $k = 4$:
+    };
+    \node[anchor=east, align=left, font=\small] at (0.5*\s, 1) {
+        {\color{purple} $W = \{c_1, c_2, c_5, c_7\}$}\\
+        satisfies \textcolor{blue!70}{EJR}
+    };
+
+    \end{tikzpicture}
+    \end{center}
+\end{example}
+
+
+\begin{remark}[Finding Proportional Committees Efficiently]
+    So far, we have largely talked about verifying a committee satisfies 
+    certain properties, but we have not talked about how to find a committee that satisfies these properties.
+
+    \begin{itemize}
+        \item A committee satsifying JR can be found efficiently (Exercise: Why?)
+        \item PAV satsifies EJR$^+$ (and EJR) but as noted, cannot be computed efficiently
+    \end{itemize}
+\end{remark}
+
+\begin{theorem}
+    A committee satisfying EJR$^+$ can be 
+    computed efficiently.
+\end{theorem}
+\begin{proof}[Sketch]
+    Start with an arbritrary committee of appropriate size.
+    Iterate over all pairs of candidates where one candidate is in the 
+    committee and one is outside of the committee.
+    Determine if swapping 
+    them would increase the PAV score of the committee, if so we swap them and repeat.
+    Eventually, we reach some \emph{PAV-Score local minima}, and then we terminate.
+
+    It turns out, that this local minima must satisfy
+    EJR$^+$.
+\end{proof}
+
+\begin{remark}
+    For several reasons, this doesn't make for a particularly convinving or 
+    \emph{principled/nice} voting rules.
+    Later, people came up with sequential rules that also 
+    satisfy 
+    EJR$^+$, and are also polynomial time computable.
+\end{remark}
+
+\begin{definition}[Profitable Deviation]
+    Given a committee 
+    $W$ and a group of voters $S \subseteq N$, a set of candidates $T \subseteq C$ is a 
+    \emph{profitable deviation} if
+    \[
+        |T \cap A_i| > |W \cap A_i| \text{\qquad for all $i \in S$}
+    \]
+\end{definition}
+
+\begin{definition}[Core Stability]
+    A committee $W$ is \emph{core stable}
+    if there is no group of voters $S$ and set of candidates $T$ such that
+    $|T| \leq |S| \cdot \frac{k}{n}$ and $T$ is a profitable deviation for $S$ from $W$.
+
+    \unclear{Intuition: //TODO}
+
+    The \emph{core} consists of all 
+    committees that are core stable.
+\end{definition}
+
+\begin{remark}
+    It is an open question whether the core is always non-empty.
+\end{remark}
+
+
+\begin{proposition}[EJR's relation to Core Stability]
+    Any core stable committee 
+    is EJR, that is 
+    core stability is 
+    a stronger property than EJR.
+\end{proposition}
+\begin{proof}
+    Idea: Show the contrapositive.
+    \unclear{TODO}
+\end{proof}
+\begin{example}
+    We may have that 
+    a committee is EJR but not core stable.
+
+    For example, with $k=10$, $n=20$ and $C = \set{x_1, \dots, x_{10}, y, z}$, 
+    \[
+        3 \times \set{x_1, y} \qquad 3 \times \set{x_1, z} 
+        \qquad 14 \times \set{x_2, \dots x_{10}}
+    \]
+    
+    $W := \set{x_1, \dots, x_10}$
+    satisfies EJR, but the group of voters approving $y$ and $z$ can profitably deviate to $\set{x_1, y, z}$.
+
+    This exemplifies the difference between the notions.
+    Core stability considers all possible deviations, whereas 
+    EJR only considers deviations restricted to cohesive groups.
+\end{example}
+
+\subsection{Approval-based Multiwinner Voting's relation to Apportionment}
+
+\begin{idea}
+    The apportionment setting may be viewed as a special case of 
+    the approval-based multiwinner voting setting, where
+    we partition the candidates into sets 
+    $C_1, \dots, C_m$ (where $C_j \geq k$
+    \footnote{To ensure that, in principle, each party could fill all 
+    seats.}), and each voter $i \in N$, has 
+    $A_i = C_j$ for some $j$.
+
+    In this setting, 
+    $v_j = |N_j|$ where $N_j = \{i \in N : A_i = C_j\}$, and
+    $k = h$.
+
+    Thus, we can see 
+    the apportionment setting as a special case of the approval-based multiwinner voting setting, and
+    can consider how our 
+    approval-based multiwinner rules perform in this setting.
+\end{idea}
+
+\begin{example}[Apportionment to Multiwinner Translation]
+    \textbf{Step 1:} Translate $(v, h) \longrightarrow (A_N, k)$.
+
+    Given $v = (30, 18, 7)$, $h = 4$. 
+    Create $|C_j| = k = 4$ candidates per party:
+    \[
+        C = \underbrace{\set{a_1, a_2, a_3, a_4}}_{P_1} 
+        \cup \underbrace{\set{b_1, b_2, b_3, b_4}}_{P_2} 
+        \cup \underbrace{\set{c_1, c_2, c_3, c_4}}_{P_3}
+    \]
+    Set $k = h = 4$. The approval profile is:
+    \begin{center}
+    \begin{tabular}{r l}
+        $30 \times$ & $\{a_1, a_2, a_3, a_4\}$ \\
+        $18 \times$ & $\{b_1, b_2, b_3, b_4\}$ \\
+        $7 \times$  & $\{c_1, c_2, c_3, c_4\}$
+    \end{tabular}
+    \end{center}
+
+    \textbf{Step 2:} Apply rule to $(A_N, k)$:
+    say, 
+    $W = \{a_1, a_2, a_3, b_1\}$.
+
+    \textbf{Step 3:} Read off seat distribution: 
+    $(|W \cap C_1|, |W \cap C_2|, |W \cap C_3|) = (3, 1, 0)$.
+\end{example}
+
+\begin{theorem}[$\vec{w}$-PAV induces Divisor methods]
+    Let $\vec{w} = (w_1, w_2, \dots)$ be a weight vector with 
+    $w_j \geq w_{j+1} > 0$ for all $j \in \mathbb{N}$.
+    Then, the apportionment method induced by $w$-PAV coincides with the 
+    divisor method based on divisor sequence $d(j) = 1/w_j$.
+
+    \begin{itemize}
+        \item PAV (weight vector $w_j = 1/j$) induces the 
+        D'Hondt method (divisors $1, 2, 3, \dots$).
+        \item $w$-PAV with $w = (1, 1/3, 1/5, \dots)$ induces the 
+        Sainte-Lagu\"e method (divisors $1, 3, 5, \dots$).
+    \end{itemize}
+\end{theorem}
+
+\begin{proposition}
+    If an approval-based multiwinner rule satisfies EJR,
+    then the apportionment method it induces satisfies the lower quota property.
+\end{proposition}
+
+\begin{observation}
+    Recall that DHondt's method is the 
+    only divisor method satisfying 
+    the lower quota property,
+    and likewise 
+    PAV is the only $\vec{w}$-PAV rule satisfying EJR.
+\end{observation}
 
 \unclear{TODO: Crib sheet for all the rules and the properties that they satisfy.}
 
 \bibliographystyle{plain}
 \bibliography{refs}
+
+
 \end{document}
