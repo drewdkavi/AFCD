@@ -138,7 +138,7 @@
 \chapter{Introduction}
 
 A course on social choice theory --- 
-a study of how individual prefernces can be combined, 
+a study of how individual preferences can be combined, 
 typically in the setting of voting.
 
 This field is usually referred to as 
@@ -188,7 +188,7 @@ was a basis for this course.
 
 \begin{definition}[Strict Ranking]
     A linear order, or strict ranking on $U$ is a binary relation on
-    $U$ that is reflexive, complete, transitive and anti-symettric.
+    $U$ that is reflexive, complete, transitive and antisymmetric.
     We let $\mathcal{L}(U)$ denote the set of all strict rankings on $U$.
 \end{definition}
 
@@ -230,7 +230,7 @@ was a basis for this course.
         \item We show 
         $\forall b \in A, (bRa \implies aRb) \iff \forall b \in A, aRb$.
 
-        The $\impliedby$ direction is immediated. For $\implies$ take 
+        The $\impliedby$ direction is immediate. For $\implies$ take 
         $b \in A$, then $bRa$ or $aRb$ by completeness. If $bRa$, then $aRb$ by the antecedent. If $aRb$, then we are done.
 
         \item Consider the rock, paper, scissor relation.
@@ -283,7 +283,7 @@ was a basis for this course.
     (we assume $n \geq 2$).
 
     We call $R_N = (\gtrsim_1, \dots, \gtrsim_n) \in \mathcal{L}(U)^N$ a \emph{preference profile} over $U$
-    \footnote{We $N$ as the superscript (instead of $n$) because we think of $R_N$ as a function from $N \mapsto \mathcal{L}(U)$.}.
+    \footnote{We use $N$ as the superscript (instead of $n$) because we think of $R_N$ as a function from $N \mapsto \mathcal{L}(U)$.}.
 \end{definition}
 
 \begin{definition}[Feasible Sets]
@@ -339,7 +339,7 @@ was a basis for this course.
 \end{example}
 
 \section{Desired Properties and Initial Theorems}
-\begin{definition}[Basic Fariness Conditions]
+\begin{definition}[Basic Fairness Conditions]
     Often we hope that our aggregation functions satisfy certain properties,
     two most fundamental are the following (defined for SCFs):
     \begin{itemize}
@@ -371,10 +371,10 @@ was a basis for this course.
     NB1: Pareto-optimal alternatives always exist, 
     to see as such, 
     pick an alternative,
-    if it is Pareto-optimal, we are done, otherwise there is an alternative that Pareto-dominates it,
-    consider this alternative, if it is Pareto-optimal, we are done, otherwise there is an alternative that Pareto-dominates it.
+    if it is Pareto-optimal, we are done, otherwise there is an alternative that strictly Pareto-dominates it,
+    consider this alternative, if it is Pareto-optimal, we are done, otherwise there is an alternative that strictly Pareto-dominates it.
     Given that $U$ is finite, all that remains is to show that we cannot cycle here, 
-    but this is clear since the Pareto-relation is transitive (and irreflexive).
+    but this is clear since the strict Pareto-relation is transitive (and irreflexive).
 
 
     NB2: Pareto-dominated alternatives need not exist,
@@ -663,7 +663,7 @@ was a basis for this course.
     \]
     and contains cycles
     \[
-        a \gtrsim_M b, b \gtrsim_M c, c \gtrsim_M a
+        a \succ_M b, b \succ_M c, c \succ_M a
     \]
 \end{observation}
 
@@ -722,7 +722,7 @@ was a basis for this course.
     A SCF $f$ satisfies (IIA)
     if, 
     for all $A$, $R_N, R_N'$:
-    $R_M |_A = R_M' |_A$ implies $f(R_N, A) = f(R_N', A)$.
+    $R_N |_A = R_N' |_A$ implies $f(R_N, A) = f(R_N', A)$.
 \end{definition}
 
 
@@ -808,7 +808,7 @@ IIA, Pareto-optimality, transitive rationalisability, and dictatorship for SWFs.
         \item $g$ satisfies \emph{independence of 
         irrelevant alternative (IIA)} if 
         for all $R_N, R_N', x, y$, 
-        $R_N|_{\set{x, y}} = R_N'|_{\set{x, y}}$ implies $\gtrsim|_{\set{x, y}} \iff \gtrsim|_{\set{x, y}}$.
+        $R_N|_{\set{x, y}} = R_N'|_{\set{x, y}}$ implies $\gtrsim|_{\set{x, y}} \iff \gtrsim'|_{\set{x, y}}$.
 
         \item $g$ satisfies \emph{Pareto optimality} if for all $R_N$ and $x, y$,
         $\forall i \in N, x \succ_i y$ implies $x \succ y$.
@@ -885,7 +885,7 @@ dictatorship, and this holds no matter what case we choose.
     on this theorem are prevalent, 
     and so if we want these easy and desirable properties
     it seems we must give up.
-    We spend much of the course finding ways to escaper from this 
+    We spend much of the course finding ways to escape from this 
     impossibility:
     \begin{itemize}
         \item restricted domains of preferences
@@ -1130,7 +1130,7 @@ We see more on single-peaked preferences later.
     Arrow's Theorem.
     
     It should be clear that 
-    it is not a dictatoriship.
+    it is not a dictatorship.
 
     Consider that if everyone ranks 
     one alternative over the other, 
@@ -1600,7 +1600,7 @@ We defer the proof to ???, from which it follows trivially.
     a \emph{score vector} $s := (s_1, s_2, \ldots, s_{|A|})$ is a real vector, 
     such that if voter ranks an alternative 
     at the $i$-th position, then it gets $s_i$ points.
-    A \emph{scoring rule} is a SCF that choses those 
+    A \emph{scoring rule} is a SCF that chooses those 
     alternatives with the highest total score.
 
     More formally, 
@@ -1695,7 +1695,7 @@ We defer the proof to ???, from which it follows trivially.
 \begin{example}
     Let's think about which rules satisfy this.
     It is clear that Plurality satisfies this.
-    \unclear{Think why? Also, does Borda satsify it?}
+    \unclear{Think why? Also, does Borda satisfy it?}
 \end{example}
 
 \begin{theorem}[Smith, 1973; Young, 1975]
@@ -2038,7 +2038,7 @@ We defer the proof to ???, from which it follows trivially.
     Borda and Condorcet there have been some attempts to unify the rules.
     \begin{itemize}
         \item Black's Rule: Return the Condorcet winner when 
-        one exist, otherwise the Borda winner(s) (by definition a Codorcet extension).
+        one exist, otherwise the Borda winner(s) (by definition a Condorcet extension).
         - it is slightly ad hoc.
         \item Baldwin's Rule:
         Run-off method based on (narrow) Borda's rule.
@@ -2066,7 +2066,7 @@ We defer the proof to ???, from which it follows trivially.
     \end{tabular}
     \end{center}
     Since $f(R_N, \set{a, b, c})$ must select 
-    some alternative and the profile is symettric in 
+    some alternative and the profile is symmettric in 
     $a$, $b$, and $c$, there is no Condorcet winner, 
     so without loss of generality assume 
     $b \in f(R_N, \set{a, b, c})$.
@@ -2190,7 +2190,7 @@ We defer the proof to ???, from which it follows trivially.
     a linear order by changing the direction of some edges,
     any change invokes a penalty in the Kemeny-Score
     of $n_{xy} - n_{yx}$, precisely the 
-    the edge weight in the margin graph.
+    edge weight in the margin graph.
     
 \end{example}
 
@@ -2581,7 +2581,7 @@ We defer the proof to ???, from which it follows trivially.
     It may be viewed as a greedy heuristic for finding 
     rankings with a high Kemeny score.
 
-    Ranked Pairs is an SCF that follows more algorithmcally.
+    Ranked Pairs is an SCF that follows more algorithmically.
 
     \begin{enumerate}
         \item 
@@ -2627,7 +2627,7 @@ We defer the proof to ???, from which it follows trivially.
     The irresolute SCF that outputs all alternatives that 
     can win under some tiebreaker, 
     we then can maintain anonymity and neutrality 
-    (but annoyingly, does nto satisfy independence of clones).
+    (but annoyingly, does not satisfy independence of clones).
     Computing it is NP-Hard (reduction from SAT).
 \end{definition}
 
@@ -2808,7 +2808,7 @@ We defer the proof to ???, from which it follows trivially.
     $\operatorname{sp}(C) < m(a, b)$.
 
     Informally, we think that $a$ defeats $b$ if 
-    it wins it strictly wins in the majority relation, and 
+    it strictly wins in the majority relation, and 
     further the edge from $a \to  b$  is never the weakest link on a cycle.
 \end{definition}
 
@@ -3031,7 +3031,7 @@ We defer the proof to ???, from which it follows trivially.
         \item Compute for each pair of alternatives 
         $\operatorname{strength}(a, b)$: $O(|A|^3)$ each so $O(|A|^5)$ total.
         \item For each pair, check if 
-        $a$ defeats $b$ by checking if $a \succ_M b$ and $\operatorname{strength}(a, b) < m(a, b)$: $O(|A|^2)$.
+        $a$ defeats $b$ by checking if $a \succ_M b$ and $\operatorname{strength}(b, a) < m(a, b)$: $O(|A|^2)$.
         \item Return all those alternatives with no incoming edges in the defeat graph.
     \end{enumerate}
 \end{remark}
@@ -3081,7 +3081,7 @@ We defer the proof to ???, from which it follows trivially.
 
     Suppose that $a \notin f_{\text{SC}}(R_N, A)$, then there is some $b$ that defeats $a$.
     Then, Lemma~\ref{l:strength-characterization-SC}'s gives that 
-    $b \succ_M a$ or $\operatorname{strength}(b, a) < m(a, b)$.
+    $b \succ_M a$ and $\operatorname{strength}(b, a) < m(a, b)$.
     Now consider the cycle formed by the traversal 
     from $b \to_M a$ and then along the strongest path from $a$ to $b$.
     At some point the ranked pairs algorithm will 
@@ -3143,7 +3143,7 @@ We defer the proof to ???, from which it follows trivially.
 \chapter{Multiwinner Voting Rules}
 
 \begin{idea}
-    What does multiwinner votine mean? So far, 
+    What does multiwinner voting mean? So far, 
     we have modelled alternatives as mutually exclusive outcomes, and we 
     wanted to the chose the \emph{best} alternative, or rank all alternatives.
     Of course, many rules we have discussed are irresolute, but this 
@@ -3205,7 +3205,7 @@ We defer the proof to ???, from which it follows trivially.
     we have a set of parties $P = \{P_1, \dots, P_p\}$, and 
     each voter votes for exactly one party. 
 
-    For each party $P_i$ let $v_i$ denote the number of votes it recieves.
+    For each party $P_i$ let $v_i$ denote the number of votes it receives.
     The goal is to allocate a given number of seats among the parties, 
     \emph{proportional} to the votes.
 
@@ -3444,7 +3444,7 @@ We defer the proof to ???, from which it follows trivially.
 \subsection{Population Monotonicity}
 
 \begin{example}[The Population Paradox]
-    A party that loses votes may gain seats at the expense of a party that loses votes.
+    A party that loses votes may gain seats at the expense of a party that gains votes.
     Formally, 
     there are two vote distributions $\vec{v}$ and $\vec{v}'$ such that,
     \begin{itemize}
@@ -3553,7 +3553,7 @@ We defer the proof to ???, from which it follows trivially.
 
 \begin{definition}[Satisfaction-AV (SAV)]
     The \emph{satisfaction-approval voting} rule, 
-    choses committee(s) $W$ that maximize the total satisfaction:
+    chooses committee(s) $W$ that maximize the total satisfaction:
     \[
         \sum_{i \in N} \operatorname{sat}(i, W)
     \]
@@ -3593,7 +3593,7 @@ We defer the proof to ???, from which it follows trivially.
 
 \begin{example}
     In the above example
-    the greedy-AV rule would select all the committees with one
+    the Greedy-AV rule would select all the committees with one
     candidates from $\{a, b, c\}$ and one candidate from $\{x, y\}$.
 \end{example}
 
@@ -3654,7 +3654,7 @@ We defer the proof to ???, from which it follows trivially.
     $\vec{w} = (1, 0, 0, \dots)$, we get 
     exactly Greedy-AV.
 
-    Can we make a simillar comment about 
+    Can we make a similar comment about 
     SAV? Think, why or why not?
 \end{remark}
 
@@ -3741,7 +3741,7 @@ We defer the proof to ???, from which it follows trivially.
 
 \begin{example}\label{e:fail-JR}
     Despite JR being incredibly weak,
-    many approval-based mutliwinner rules violate JR.
+    many approval-based multiwinner rules violate JR.
     \begin{itemize}
         \item AV fails JR (for $k \geq 2$)
         \item SAV fails JR (for $k \geq 2$)
@@ -3752,7 +3752,7 @@ We defer the proof to ???, from which it follows trivially.
 \begin{proposition}[Proof Idea]
     If there is a JR violation, then any candidate witnessing the 
     violation can be swapped into the committee to increase the 
-    PAV score (by atleast $n/k$).
+    PAV score (by at least $n/k$).
 \end{proposition}
 
 \begin{theorem}
@@ -3938,7 +3938,7 @@ We defer the proof to ???, from which it follows trivially.
 \begin{example}
     Consider the following example, 
     the committee 
-    $W$ indeed satsifies EJR (check), 
+    $W$ indeed satisfies EJR (check), 
     and yet that committee 
     does not satisfy 
     EJR$^+$, 
@@ -3951,7 +3951,7 @@ We defer the proof to ???, from which it follows trivially.
 
     Further $|S| \geq 3 \cdot n / k$, 
     but every member is 
-    satisfied why less than 
+    satisfied by fewer than 
     $3$ candidates in $W$.
 
 
@@ -4018,8 +4018,8 @@ We defer the proof to ???, from which it follows trivially.
     certain properties, but we have not talked about how to find a committee that satisfies these properties.
 
     \begin{itemize}
-        \item A committee satsifying JR can be found efficiently (Exercise: Why?)
-        \item PAV satsifies EJR$^+$ (and EJR) but as noted, cannot be computed efficiently
+        \item A committee satisfying JR can be found efficiently (Exercise: Why?)
+        \item PAV satisfies EJR$^+$ (and EJR) but as noted, cannot be computed efficiently
     \end{itemize}
 \end{remark}
 
@@ -4028,7 +4028,7 @@ We defer the proof to ???, from which it follows trivially.
     computed efficiently.
 \end{theorem}
 \begin{proof}[Sketch]
-    Start with an arbritrary committee of appropriate size.
+    Start with an arbitrary committee of appropriate size.
     Iterate over all pairs of candidates where one candidate is in the 
     committee and one is outside of the committee.
     Determine if swapping 
@@ -4040,7 +4040,7 @@ We defer the proof to ???, from which it follows trivially.
 \end{proof}
 
 \begin{remark}
-    For several reasons, this doesn't make for a particularly convinving or 
+    For several reasons, this doesn't make for a particularly convincing or 
     \emph{principled/nice} voting rules.
     Later, people came up with sequential rules that also 
     satisfy 
