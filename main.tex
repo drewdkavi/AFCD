@@ -47,7 +47,7 @@
 
 \newcommand{\unclear}[1]{%
   \par\noindent
-  \colorbox{yellow!30}{Gap: #1}\par
+  \colorbox{yellow!30}{#1}\par
 }
 
 \theoremstyle{plain}
@@ -261,7 +261,7 @@ was a basis for this course.
 
 \begin{definition}[Prefernces over Alternatives]
     Let $U$ be a finite set, which we call the \emph{alternatives}.
-    A prefernce relation on $U$ is linear order on $U$.
+    A \emph{prefernce relation} on $U$ is linear order on $U$.
 
     Typically, we consider multiple preference relations, 
     we usually use the notation 
@@ -347,7 +347,7 @@ was a basis for this course.
         Formally, for all pairs $R_N, R'_N \in \mathcal{L}(U)^N$ such that there is a permutation $\pi : N \to N$ with $\gtrsim_i = \gtrsim'_{\pi(i)}$, 
         and for all $A \in \mathcal{F}(U)$, we have $f(R_N, A) = f(R'_N, A)$.
         \item Neutrality: the SCF is well-behaved under relabelling of the alternatives.
-        Formally, for all pairs $R_N, R'_N \in \mathcal{L}(U)^N$ such that there is a bijection
+        Formally, for all pairs $R_N \in \mathcal{L}(U)^N$, $R'_N \in \mathcal{L}{U'}$ such that there is a bijection
         $\sigma : U \to U'$ with $x \gtrsim_i y \iff \sigma(x) \gtrsim'_i \sigma(y)$ for all $i \in N$ and $x, y \in U$,
         and for all $A \in \mathcal{F}(U)$, $\sigma(f(R_N, A)) = f(R'_N, \sigma(A))$.
     \end{itemize}
@@ -358,7 +358,7 @@ was a basis for this course.
     More specifically,
     given $R_N \in \mathcal{L}(U)^N$ and $x, y \in U$, we say:
     \begin{itemize}
-        \item $x$ \emph{Pareto-dominates} $y$ if $\forall i \in N$, $x \gtrsim_i y$.
+        \item $x$ \emph{Pareto-dominates} $y$ if $\forall i \in N$, $x \succ_i y$.
         \item $y$ is \emph{Pareto-dominated} if there is some $x \in U$ that Pareto-dominates $y$.
         \item $x$ is \emph{Pareto-optimal} if there is no $y \in U$ that Pareto-dominates $x$.
     \end{itemize}
@@ -468,7 +468,7 @@ was a basis for this course.
     Moreover, 
     we say $f$ is \emph{positive responsive} if 
     for all $R_N, R_N' \in \mathcal{L}(U)^N$ and $A \in \mathcal{F}(U)$,
-    such that the same conditions hold, 
+    such that the same conditions hold, and where $R_N \neq R_N'$, 
     then if $a \in f(R_N, A)$, $\set{a} = f(R_N', A)$.
 \end{definition}
 
@@ -626,7 +626,6 @@ was a basis for this course.
     gives 
     $f(k^*) = \set{a, b}$.
 
-    \unclear{Not particularly confident I can reproduce proof.}
 \end{proof}
 
 \begin{theorem}
@@ -661,7 +660,7 @@ was a basis for this course.
         c & a & b
         \end{pmatrix}
     \]
-    and contains cycles
+    and contains cycles,
     \[
         a \succ_M b, b \succ_M c, c \succ_M a
     \]
@@ -791,7 +790,8 @@ was a basis for this course.
 
     An \emph{alternative formulation is}
     every SCF that satisfies IIA, Pareto-optimality,
-    and transitive rationalisability is a dictatorship.
+    and transitive rationalisability is a \emph{dictatorship}
+    \footnote{Where by a dictatorship we mean that the winner is always the top ranked alternative of a specific voter.}.
 \end{theorem}
 
 Most commonly, 
@@ -831,8 +831,10 @@ since that is baked into the
 notion of a SWF.
 \begin{theorem}[Arrow's for SWFs]
     Every SWF that satisfies IIA and Pareto optimality is a dictatorship
-    for three or more alternatives.
+    for three or more alternatives (and two or more voters which we now assume
+    from here on out).
 \end{theorem}
+
 
 Proofs of these formulations of 
 Arrow's Impossibility Theorem are omitted, but we sketch the idea
@@ -883,7 +885,7 @@ dictatorship, and this holds no matter what case we choose.
     What now? 
     Arrow's and variations 
     on this theorem are prevalent, 
-    and so if we want these easy and desirable properties
+    and so if we want these seemingly easy and desirable properties
     it seems we must give up.
     We spend much of the course finding ways to escape from this 
     impossibility:
@@ -898,12 +900,12 @@ dictatorship, and this holds no matter what case we choose.
 
 \begin{remark}
     Implicit in Arrow's Impossibility Theorem 
-    is that all preference profiles are possible,
+    is the assumption that all preference profiles are possible,
     in the literature this assumption is called 
     \emph{universal domain}.
     In some contexts, it makes sense 
     to restrict the domain of possible preference profiles,
-    to allow for better axiomatic results.
+    which allows for better axiomatic results.
 \end{remark}
 \begin{example}
     Trivial Example: Only preference profiles are those in 
@@ -1065,13 +1067,13 @@ We see more on single-peaked preferences later.
     bypass impossibility results. In particular, 
     we are interested in domain in which the majority
     relation $\gtrsim_M$ is transitive.
-
     It is clear that in this restricted domain, 
     $\succ_M$ contains no cycles, and so 
     we get rid of the Condorcet Paradox.
 
     In particular, 
-    if $\gtrsim_M$ is transitive, then 
+    if $\gtrsim_M$ is transitive
+    then $\gtrsim_M \in \mathcal{R}(U)$, thus 
     $\operatorname{Max}(\gtrsim_M, A)$ is a well-defined SCF.
 \end{remark}
 
@@ -1146,7 +1148,7 @@ We see more on single-peaked preferences later.
     $R_N, R_N'$ are two profiles that are the same when 
     restricted to $A$.
     Then consider that the pairwise majority
-    in $R_N$ and $R_N'$ must be the same when restricted to $A$ (clearly).
+    in $R_N$ and $R_N'$ must be the same when restricted to $A$ (so IIA is satisfied).
 
     Finally, it is obvious that 
     the majority relation is a transitive 
@@ -1230,10 +1232,7 @@ a subdomain of $\mathcal{D}_{\text{TRANS}}(U)$.
     ranks 
     $y$ between $x$ and $z$, 
     then if the preference relation ranks $x$ over $y$, then it must rank $y$ over $z$.
-    This gives a kind of monotonicity condition everywhere 
-    except for when 
-    the linear order ranks $y$ at the top of $x$ and $z$, in which case there is no restriction, 
-    and $y$ may be the peak.
+    This gives a kind of monotonicity condition which is the intuitive notion of single-peakedness.
 
     Alternatively, consider what this definition forbids.
     That is, it disallows the middle 
@@ -1258,7 +1257,7 @@ a subdomain of $\mathcal{D}_{\text{TRANS}}(U)$.
 
     
     Equivalently, 
-    we can define 
+    we can define
     it as
     \[
         \mathcal{D}_{\text{SP}}^{\trianglelefteq}(U) := \set{\gtrsim \in \mathcal{L}(U) : \gtrsim \text{ is single-peaked with respect to } \trianglelefteq}^N
@@ -1279,7 +1278,7 @@ a subdomain of $\mathcal{D}_{\text{TRANS}}(U)$.
 
 The big motivation for 
 considering single-peaked preferences, is the following 
-theorem, which follows from the previous section.
+theorem, which follows(-ish) from the previous section.
 \begin{theorem}[Black, 1948]
     $\gtrsim_M$ is transitive in 
     $\mathcal{D}_{\text{SP}}^{\trianglelefteq}(U)$.
@@ -1302,7 +1301,7 @@ We defer the proof to ???, from which it follows trivially.
     ($y \succ x \implies z \succ y$).   
 \end{remark}
 
-\begin{theorem}
+\begin{intuition}
     We give some intuition as to why
     $\gtrsim_M$ is transitive in $\mathcal{D}_{\text{SP}}^{\trianglelefteq}(U)$.
 
@@ -1314,9 +1313,9 @@ We defer the proof to ???, from which it follows trivially.
     according to their top choice.
     Then the alternative that the
     median pebble (according to $\trianglelefteq$) is placed on is the Condorcet winner.
-\end{theorem}
-\begin{proof}
-    \unclear{TODO: Easy proof.}
+\end{intuition}
+\begin{proof}[Sketch]
+    \unclear{See lectures for a sketch of the proof.}
 \end{proof}
 
 \begin{remark}
@@ -1346,7 +1345,7 @@ We defer the proof to ???, from which it follows trivially.
     strategyproofness in the domain $\mathcal{D}_{\text{SP}}^{\trianglelefteq}(U)$.
     This follows from Black's theorem and Lemma~\ref{l:majRelStratProofinTrans}.
 
-    In $\mathcal{D}_{\text{SP}}^{\trianglelefteq}(U)$,
+    We see that in $\mathcal{D}_{\text{SP}}^{\trianglelefteq}(U)$,
     it is computationally trivial to find the Condorcet winner.
     So far, we have not thought much about the 
     computational social choice theory from a complexity perspective,
@@ -1392,7 +1391,7 @@ We defer the proof to ???, from which it follows trivially.
     Then, we remove $l$ and $r$ from the profile and repeat this process.
     Let $A \subseteq U$ be the set of alternatives that have not yet been arranged.
 
-    Suppose that $x$ is the bottom ranked alternative in
+    Suppose that $x$ is a bottom ranked alternative in
     the profile restricted to $A$ (so needs to be placed next).
     If there is a voter that ranks
     $l \succ_i x \succ_i r$, and 
@@ -2038,7 +2037,7 @@ We defer the proof to ???, from which it follows trivially.
     Borda and Condorcet there have been some attempts to unify the rules.
     \begin{itemize}
         \item Black's Rule: Return the Condorcet winner when 
-        one exist, otherwise the Borda winner(s) (by definition a Condorcet extension).
+        one exist, otherwise the Borda winner(s) (by definition a Condorcet extension)
         - it is slightly ad hoc.
         \item Baldwin's Rule:
         Run-off method based on (narrow) Borda's rule.
@@ -2109,7 +2108,7 @@ We defer the proof to ???, from which it follows trivially.
 
 \begin{idea}[Social Preferences]
     SPF : $\mathcal{L}(U)^N \to \mathcal{F}(\mathcal{L}(U))$, 
-    where $\mathcal{F}(\mathcal{L}(U))$ is the set of non-empty finite subsets of $\mathcal{L}(U)$.
+    where $\mathcal{F}(\mathcal{L}(U))$ is the set of non-empty subsets of $\mathcal{L}(U)$.
 
     In this context, 
     Young and Levenglick's theorem (Theorem~\ref{t:Young-Levenglick})
@@ -2409,7 +2408,7 @@ We defer the proof to ???, from which it follows trivially.
     with edge weights of $1$.
 \end{theorem}
 \begin{proof}
-    \unclear{TODO}
+    \unclear{See lectures for proof.}
 \end{proof}
 
 \begin{definition}[Feedback Arc Set]
@@ -2477,7 +2476,7 @@ We defer the proof to ???, from which it follows trivially.
     Often, all we need is the order 
     among $\big(m(x, y)\big)_{x, y \in U}$ (note, this is not 
     the case for Kemeny). Basically, this is the same as 
-    be a function of 
+    a function of 
     the margin graph.
 \end{definition}
 
@@ -2570,7 +2569,7 @@ We defer the proof to ???, from which it follows trivially.
     independence of clones, 
     but we are not too fond of it because it fails to satisfy 
     many other desirable properties:
-    it is not monotonic, nor \emph{Condorcet consistent}.
+    it is not monotonic, nor a \emph{Condorcet extension}.
 \end{example}
 
 \section{Ranked Pairs}
@@ -2641,7 +2640,7 @@ We defer the proof to ???, from which it follows trivially.
 \begin{remark}
     Stability for winners implies that there can not be 
     a \emph{spoiler effect} as in 
-    the Gore, Bush, Nader case.
+    the Gore, Bush, Nader case (2000 US Presidential Election).
 \end{remark}
 
 
@@ -3080,7 +3079,7 @@ We defer the proof to ???, from which it follows trivially.
     We omit the details of tie-breaking.
 
     Suppose that $a \notin f_{\text{SC}}(R_N, A)$, then there is some $b$ that defeats $a$.
-    Then, Lemma~\ref{l:strength-characterization-SC}'s gives that 
+    Then, Lemma~\ref{l:strength-characterization-SC} gives that 
     $b \succ_M a$ and $\operatorname{strength}(b, a) < m(a, b)$.
     Now consider the cycle formed by the traversal 
     from $b \to_M a$ and then along the strongest path from $a$ to $b$.
@@ -3503,7 +3502,7 @@ We defer the proof to ???, from which it follows trivially.
     note $A_i$ is free to be any subset of $C$.
 
     A \emph{committee} of size $k$ is a $k$-sized subset of 
-    $C$, most often we denote it $W \subset C$.
+    $C$, most often we denote it $W \subseteq C$.
 
     Given a \emph{preference profile} 
     $A_N = (A_1, \dots, A_n)$
@@ -3588,7 +3587,7 @@ We defer the proof to ???, from which it follows trivially.
     
     We say that a voter $i$ is represented in $W$ if 
     $A_i \cap W \neq \emptyset$.
-    If / when all voters are represented, we can add any candidates we like to fill up the committee.
+    If all voters are represented, we can add any candidates we like to fill up the committee.
 \end{definition}
 
 \begin{example}
@@ -3888,9 +3887,9 @@ We defer the proof to ???, from which it follows trivially.
 \begin{proposition}
     EJR$^+$ implies EJR.
 \end{proposition}
-\begin{proposition}
+\begin{proof}
     \unclear{Exercise.}
-\end{proposition}
+\end{proof}
 
 \begin{remark}
     It can be verified efficiently if 
@@ -4061,8 +4060,6 @@ We defer the proof to ???, from which it follows trivially.
     if there is no group of voters $S$ and set of candidates $T$ such that
     $|T| \leq |S| \cdot \frac{k}{n}$ and $T$ is a profitable deviation for $S$ from $W$.
 
-    \unclear{Intuition: //TODO}
-
     The \emph{core} consists of all 
     committees that are core stable.
 \end{definition}
@@ -4078,9 +4075,8 @@ We defer the proof to ???, from which it follows trivially.
     core stability is 
     a stronger property than EJR.
 \end{proposition}
-\begin{proof}
-    Idea: Show the contrapositive.
-    \unclear{TODO}
+\begin{proof}[Idea]
+    Show the contrapositive.
 \end{proof}
 \begin{example}
     We may have that 
@@ -4174,8 +4170,6 @@ We defer the proof to ???, from which it follows trivially.
     and likewise 
     PAV is the only $\vec{w}$-PAV rule satisfying EJR.
 \end{observation}
-
-\unclear{TODO: Crib sheet for all the rules and the properties that they satisfy.}
 
 \bibliographystyle{plain}
 \bibliography{refs}
